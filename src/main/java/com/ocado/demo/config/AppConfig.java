@@ -35,11 +35,13 @@ public class AppConfig {
         return new TenantMessageProcessor();
     }
 
+    // Is needed when no credentials are set (e.g. in ~/.aws/credentials)
     @Bean
     AwsCredentialsProvider awsCredentialsProvider() {
         return StaticCredentialsProvider.create(AwsBasicCredentials.create("foo", "foo"));
     }
 
+    // Is needed when no region is set (e.g. in ~/.aws/credentials)
     @Bean
     AwsRegionProvider awsRegionProvider() {
         return new StaticRegionProvider(Region.US_EAST_1.id());

@@ -12,7 +12,7 @@ services:
       - ./docker/localstack/cf-template.yml:/mounts/cf-template.yml
     ports:
       - "4566:4566"
-#    environment:
-#      AWS_ACCESS_KEY_ID: foo
-#      AWS_SECRET_ACCESS_KEY: foo
+    environment:
+      AWS_ACCESS_KEY_ID: foo
+      AWS_SECRET_ACCESS_KEY: foo
 #      DEBUG: 1
