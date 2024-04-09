@@ -1,0 +1,18 @@
+version: '3'
+
+services:
+  localstack:
+    image: localstack/localstack:3.3.0
+    networks:
+      default:
+        aliases:
+          - sqs.us-east-1.localhost.localstack.cloud
+    volumes:
+      - ./docker/localstack/cf-create-stack.sh:/etc/localstack/init/ready.d/cf-create-stack.sh
+      - ./docker/localstack/cf-template.yml:/mounts/cf-template.yml
+    ports:
+      - "4566:4566"
+#    environment:
+#      AWS_ACCESS_KEY_ID: foo
+#      AWS_SECRET_ACCESS_KEY: foo
+#      DEBUG: 1
