@@ -4,8 +4,6 @@ import com.ocado.demo.sqs.SqsAsyncClientCustomizer;
 import com.ocado.demo.tenant.TenantContext;
 import com.ocado.demo.tenant.TenantMessageProcessor;
 import com.ocado.demo.tenant.sqs.TenantIdSqsListener;
-import com.ocado.demo.tenant.sqs.TenantIdSqsListenerEffect;
-import com.ocado.demo.tenant.sqs.TenantIdSqsMessageInterceptor;
 import io.awspring.cloud.core.region.StaticRegionProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -60,14 +58,8 @@ public class AppConfig {
     }
 
     @Bean
-    SqsAsyncClient sqsAsyncClient(
-            AwsCredentialsProvider awsCredentialsProvider,
-            AwsRegionProvider awsRegionProvider,
-            List<SqsAsyncClientCustomizer> sqsAsyncClientCustomizers
-    ) {
-        var clientBuilder = SqsAsyncClient.builder()
-                .credentialsProvider(awsCredentialsProvider)
-                .region(awsRegionProvider.getRegion());
+    SqsAsyncClient sqsAsyncClient(List<SqsAsyncClientCustomizer> sqsAsyncClientCustomizers) {
+        var clientBuilder = SqsAsyncClient.builder();
         for (var sqsAsyncClientCustomizer : sqsAsyncClientCustomizers) {
             sqsAsyncClientCustomizer.customize(clientBuilder);
         }

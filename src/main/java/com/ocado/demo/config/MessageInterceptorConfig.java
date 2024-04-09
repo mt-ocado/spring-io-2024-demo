@@ -1,6 +1,5 @@
 package com.ocado.demo.config;
 
-import com.ocado.demo.sqs.OtpMessageHandlerMethodFactory;
 import com.ocado.demo.tenant.TenantContext;
 import com.ocado.demo.tenant.TenantMessageProcessor;
 import com.ocado.demo.tenant.sqs.TenantIdSqsMessageInterceptor;
