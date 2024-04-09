@@ -8,6 +8,7 @@ AWS is emulated locally by Localstack.
 ## Pre-requisites
 
 - Docker
+- Intellij IDEA
 
 ## Run the infrastructure
 
