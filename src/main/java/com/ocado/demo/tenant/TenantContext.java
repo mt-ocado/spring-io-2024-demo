@@ -1,21 +1,25 @@
 package com.ocado.demo.tenant;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
+@Component
 @RequiredArgsConstructor
 public class TenantContext {
 
     private static final ThreadLocal<String> TENANT_ID = new ThreadLocal<>();
 
-    public void setId(String id){
+    public void setId(String id) {
         TENANT_ID.set(id);
     }
 
-    public String getId(){
+    public String getId() {
         return TENANT_ID.get();
     }
 
-    public void clearId(){
+    public void clearId() {
         TENANT_ID.remove();
-    };
+    }
+
+    ;
 }
