@@ -16,20 +16,16 @@ import java.util.List;
 @Configuration
 public class CustomMessageInterceptorConfig {
     @Bean
-    MessageInterceptor<String> customTenantIdMessageInterceptor(
-            TenantContext tenantContext,
-            TenantMessageProcessor tenantMessageProcessor
-    ) {
+    MessageInterceptor<String> customTenantIdMessageInterceptor(TenantContext tenantContext, TenantMessageProcessor tenantMessageProcessor) {
         return new TenantIdMessageInterceptor<>(tenantContext, tenantMessageProcessor);
     }
 
-
     @Bean
     SqsListenerConfigurer otpSqsListenerConfigurer(List<MessageInterceptor> messageInterceptors) {
-        return registrar -> {
+        return configurer -> {
             // is not injected as bean due to unwanted effect of afterPropertiesSet method
             var messageHandlerMethodFactory = new CustomMessageHandlerMethodFactory(messageInterceptors);
-            registrar.setMessageHandlerMethodFactory(messageHandlerMethodFactory);
+            configurer.setMessageHandlerMethodFactory(messageHandlerMethodFactory);
         };
     }
 }

@@ -1,19 +1,20 @@
 package com.ocado.demo.tenant.sqs;
 
 import io.awspring.cloud.sqs.listener.interceptor.MessageInterceptor;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.handler.annotation.support.DefaultMessageHandlerMethodFactory;
 import org.springframework.messaging.handler.invocation.InvocableHandlerMethod;
 
 import java.lang.reflect.Method;
 import java.util.List;
+import java.util.logging.Logger;
 
-@Slf4j
-@RequiredArgsConstructor
 public class CustomMessageHandlerMethodFactory extends DefaultMessageHandlerMethodFactory {
     private final List<MessageInterceptor> messageInterceptors;
+
+    public CustomMessageHandlerMethodFactory(List<MessageInterceptor> messageInterceptors) {
+        this.messageInterceptors = messageInterceptors;
+    }
 
     @Override
     public InvocableHandlerMethod createInvocableHandlerMethod(Object bean, Method method) {
@@ -22,6 +23,7 @@ public class CustomMessageHandlerMethodFactory extends DefaultMessageHandlerMeth
     }
 
     static class CustomInvocableHandlerMethod extends InvocableHandlerMethod {
+        private Logger log = Logger.getLogger(CustomInvocableHandlerMethod.class.getName());
         private final InvocableHandlerMethod handlerMethod;
         private final List<MessageInterceptor> messageInterceptors;
 
