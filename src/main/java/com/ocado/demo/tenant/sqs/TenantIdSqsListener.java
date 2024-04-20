@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class TenantIdSqsListener {
-    private Logger log = LoggerFactory.getLogger(TenantIdSqsListener.class);
+    private final Logger log = LoggerFactory.getLogger(TenantIdSqsListener.class);
     private final TenantContext tenantContext;
 
     public TenantIdSqsListener(TenantContext tenantContext) {

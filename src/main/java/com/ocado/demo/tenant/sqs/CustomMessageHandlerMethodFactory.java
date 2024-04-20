@@ -23,7 +23,7 @@ public class CustomMessageHandlerMethodFactory extends DefaultMessageHandlerMeth
     }
 
     static class CustomInvocableHandlerMethod extends InvocableHandlerMethod {
-        private Logger log = Logger.getLogger(CustomInvocableHandlerMethod.class.getName());
+        private final Logger log = Logger.getLogger(CustomInvocableHandlerMethod.class.getName());
         private final InvocableHandlerMethod handlerMethod;
         private final List<MessageInterceptor> messageInterceptors;
 

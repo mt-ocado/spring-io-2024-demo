@@ -2,6 +2,8 @@ package com.ocado.demo.config;
 
 import com.ocado.demo.tenant.TenantContext;
 import com.ocado.demo.tenant.TenantMessageProcessor;
+import com.ocado.demo.tenant.observability.AccessCounter;
+import com.ocado.demo.tenant.observability.ObservabilityMessageInterceptor;
 import com.ocado.demo.tenant.sqs.CustomMessageHandlerMethodFactory;
 import com.ocado.demo.tenant.sqs.TenantIdMessageInterceptor;
 import io.awspring.cloud.sqs.config.SqsListenerConfigurer;
@@ -9,6 +11,7 @@ import io.awspring.cloud.sqs.listener.interceptor.MessageInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+import org.springframework.core.annotation.Order;
 
 import java.util.List;
 
@@ -16,8 +19,15 @@ import java.util.List;
 @Configuration
 public class CustomMessageInterceptorConfig {
     @Bean
+    @Order(1)
     MessageInterceptor<String> customTenantIdMessageInterceptor(TenantContext tenantContext, TenantMessageProcessor tenantMessageProcessor) {
         return new TenantIdMessageInterceptor<>(tenantContext, tenantMessageProcessor);
+    }
+
+    @Bean
+    @Order(2)
+    MessageInterceptor<String> observabilityMessageInterceptor(TenantContext tenantContext, AccessCounter accessCounter) { // T should be Object, otherwise won't be autowired in Spring Cloud AWS autoconfiguration
+        return new ObservabilityMessageInterceptor<>(tenantContext, accessCounter);
     }
 
     @Bean

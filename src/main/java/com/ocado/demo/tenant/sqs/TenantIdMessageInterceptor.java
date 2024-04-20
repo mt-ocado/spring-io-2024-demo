@@ -10,7 +10,7 @@ import org.springframework.messaging.Message;
 import java.util.function.Supplier;
 
 public class TenantIdMessageInterceptor<T> implements MessageInterceptor<T> {
-    private Logger log = LoggerFactory.getLogger(TenantIdMessageInterceptor.class);
+    private final Logger log = LoggerFactory.getLogger(TenantIdMessageInterceptor.class);
     private final TenantContext tenantContext;
     private final TenantMessageProcessor tenantMessageProcessor;
 
@@ -19,26 +19,13 @@ public class TenantIdMessageInterceptor<T> implements MessageInterceptor<T> {
         this.tenantMessageProcessor = tenantMessageProcessor;
     }
 
-
     /**
      * @see io.awspring.cloud.sqs.listener.AsyncComponentAdapters.AbstractThreadingComponentAdapter#execute(Supplier)
      */
     @Override
     public Message<T> intercept(Message<T> message) {
-        log.info("Tenant ID is validated");
-        if (tenantMessageProcessor.isValid(message)) {
-            var tid = this.tenantMessageProcessor.extract(message);
-            tenantContext.setId(tid);
-        } else {
-            log.error("Invalid message");
-        }
-        log.info("Tenant ID is set");
+        var tid = this.tenantMessageProcessor.extract(message);
+        tenantContext.setId(tid);
         return message;
-    }
-
-    @Override
-    public void afterProcessing(Message<T> message, Throwable t) {
-        log.info("Tenant ID is cleared");
-        tenantContext.clearId();
     }
 }

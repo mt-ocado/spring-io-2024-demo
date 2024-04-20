@@ -14,8 +14,4 @@ public class TenantContext {
     public String getId() {
         return TENANT_ID.get();
     }
-
-    public void clearId() {
-        TENANT_ID.remove();
-    }
 }
