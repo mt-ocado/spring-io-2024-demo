@@ -1,6 +1,5 @@
 package com.ocado.demo.sqs.sending;
 
-import io.awspring.cloud.sqs.operations.SendResult;
 import io.awspring.cloud.sqs.operations.SqsTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,24 +11,23 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-public class CustomSqsTemplate {
-    private static final Logger log = LoggerFactory.getLogger(CustomSqsTemplate.class);
+public class SqsSendingService {
+    private static final Logger logger = LoggerFactory.getLogger(SqsSendingService.class);
     private final SqsTemplate sqsTemplate;
     private final List<MessagePostProcessor> messagePostProcessors;
 
-    public CustomSqsTemplate(SqsTemplate sqsTemplate, List<MessagePostProcessor> messagePostProcessors) {
+    public SqsSendingService(SqsTemplate sqsTemplate, List<MessagePostProcessor> messagePostProcessors) {
         this.sqsTemplate = sqsTemplate;
         this.messagePostProcessors = messagePostProcessors;
     }
 
-    public <T> SendResult<T> send(String queue, T payload) {
-        log.info("----Sending----");
-        var message = MessageBuilder.withPayload(payload).build();
+    public <T> void send(String queue, T payload) {
+        logger.info("----Sending----");
+        Message<?> message = MessageBuilder.withPayload(payload).build();
         for (var messagePostProcessor : messagePostProcessors) {
-            message = (Message<T>) messagePostProcessor.postProcessMessage(message);
+            message = messagePostProcessor.postProcessMessage(message);
         }
-        log.info("Send the {}", message);
-        return sqsTemplate.send(queue, message);
+        logger.info("Send the {}", message);
+        sqsTemplate.send(queue, message);
     }
-
 }

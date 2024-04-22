@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class TenantIdMessagePostProcessor implements MessagePostProcessor {
-    private static final Logger log = LoggerFactory.getLogger(TenantIdMessagePostProcessor.class);
+    private static final Logger logger = LoggerFactory.getLogger(TenantIdMessagePostProcessor.class);
     private final TenantContext tenantContext;
 
     public TenantIdMessagePostProcessor(TenantContext tenantContext) {
@@ -19,8 +19,8 @@ public class TenantIdMessagePostProcessor implements MessagePostProcessor {
 
     @Override
     public Message<?> postProcessMessage(Message<?> message) {
-        var tid = tenantContext.getId();
-        log.info("Setting tenant ID \"{}\" in message attributes", tid);
+        var tid = tenantContext.get();
+        logger.info("Setting tenant ID \"{}\" in message attributes", tid);
         return MessageBuilder.fromMessage(message)
                 .setHeader("tenantId", tid)
                 .build();

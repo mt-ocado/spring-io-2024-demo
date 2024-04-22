@@ -3,25 +3,25 @@ package com.ocado.demo.sqs.receiving;
 import com.ocado.demo.tenant.TenantContext;
 import io.awspring.cloud.sqs.listener.interceptor.MessageInterceptor;
 import org.springframework.context.annotation.Profile;
-import org.springframework.core.annotation.Order;
 import org.springframework.messaging.Message;
-import org.springframework.stereotype.Component;
 
+import java.util.function.Supplier;
 
-@Component
-@Order(1)
 @Profile({"step-2", "step-3"})
-public class TenantIdMessageInterceptor implements MessageInterceptor<Object> {
+public class TenantIdMessageInterceptor<T> implements MessageInterceptor<T> {
     private final TenantContext tenantContext;
 
     public TenantIdMessageInterceptor(TenantContext tenantContext) {
         this.tenantContext = tenantContext;
     }
 
+    /**
+     * @see io.awspring.cloud.sqs.listener.AsyncComponentAdapters.AbstractThreadingComponentAdapter#execute(Supplier)
+     */
     @Override
-    public Message<Object> intercept(Message<Object> message) {
+    public Message<T> intercept(Message<T> message) {
         var tid = message.getHeaders().get("tenantId", String.class);
-        tenantContext.setId(tid);
+        tenantContext.set(tid);
         return message;
     }
 }

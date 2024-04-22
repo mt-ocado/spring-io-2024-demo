@@ -7,11 +7,11 @@ public class TenantContext {
 
     private static final ThreadLocal<String> TENANT_ID = new ThreadLocal<>();
 
-    public void setId(String id) {
+    public void set(String id) {
         TENANT_ID.set(id);
     }
 
-    public String getId() {
+    public String get() {
         return TENANT_ID.get();
     }
 }
