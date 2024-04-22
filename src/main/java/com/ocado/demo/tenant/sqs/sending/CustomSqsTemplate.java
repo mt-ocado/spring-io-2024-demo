@@ -28,6 +28,7 @@ public class CustomSqsTemplate {
         for (var messagePostProcessor : messagePostProcessors) {
             message = (Message<T>) messagePostProcessor.postProcessMessage(message);
         }
+        log.info("Send the {}", message);
         return sqsTemplate.send(queue, message);
     }
 

@@ -22,7 +22,7 @@ public class TenantIdMessagePostProcessor implements MessagePostProcessor {
     @Override
     public Message<?> postProcessMessage(Message<?> message) {
         var tid = tenantContext.getId();
-        log.info("Setting tenant ID {} in message attributes", tid);
+        log.info("Setting tenant ID \"{}\" in message attributes", tid);
         return tenantMessageProcessor.setInAttributes(message, tid);
     }
 }
