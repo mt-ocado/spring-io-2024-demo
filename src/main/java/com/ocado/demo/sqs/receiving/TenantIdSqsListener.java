@@ -1,4 +1,4 @@
-package com.ocado.demo.tenant.sqs.receiving;
+package com.ocado.demo.sqs.receiving;
 
 import com.ocado.demo.tenant.TenantContext;
 import io.awspring.cloud.sqs.annotation.SqsListener;

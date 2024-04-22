@@ -1,7 +1,7 @@
 package com.ocado.demo.web;
 
+import com.ocado.demo.sqs.sending.CustomSqsTemplate;
 import com.ocado.demo.tenant.TenantContext;
-import com.ocado.demo.tenant.sqs.sending.CustomSqsTemplate;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;

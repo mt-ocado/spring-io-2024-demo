@@ -1,4 +1,4 @@
-package com.ocado.demo.tenant.sqs.sending;
+package com.ocado.demo.sqs.sending;
 
 import io.awspring.cloud.sqs.operations.SendResult;
 import io.awspring.cloud.sqs.operations.SqsTemplate;
