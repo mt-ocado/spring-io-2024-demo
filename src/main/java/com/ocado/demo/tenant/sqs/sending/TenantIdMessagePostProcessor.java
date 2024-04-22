@@ -23,6 +23,6 @@ public class TenantIdMessagePostProcessor implements MessagePostProcessor {
     public Message<?> postProcessMessage(Message<?> message) {
         var tid = tenantContext.getId();
         log.info("Setting tenant ID {} in message attributes", tid);
-        return tenantMessageProcessor.set(message, tid);
+        return tenantMessageProcessor.setInAttributes(message, tid);
     }
 }
