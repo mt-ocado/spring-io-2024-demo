@@ -1,4 +1,4 @@
-package com.ocado.demo.tenant.sqs;
+package com.ocado.demo.tenant.sqs.receiving;
 
 import io.awspring.cloud.sqs.listener.interceptor.MessageInterceptor;
 import org.springframework.messaging.Message;
@@ -35,7 +35,7 @@ public class CustomMessageHandlerMethodFactory extends DefaultMessageHandlerMeth
 
         @Override
         public Object invoke(Message<?> message, Object... providedArgs) throws Exception {
-            log.info("----Custom Message Interceptor----");
+            log.info("[Custom Message Interceptor is used]");
             messageInterceptors.forEach(interceptor -> interceptor.intercept(message));
             var result = handlerMethod.invoke(message, providedArgs);
             messageInterceptors.forEach(interceptor -> interceptor.afterProcessing(message, null));

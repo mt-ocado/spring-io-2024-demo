@@ -4,7 +4,7 @@ import com.ocado.demo.tenant.TenantContext;
 import com.ocado.demo.tenant.TenantMessageProcessor;
 import com.ocado.demo.tenant.observability.AccessCounter;
 import com.ocado.demo.tenant.observability.ObservabilityMessageInterceptor;
-import com.ocado.demo.tenant.sqs.TenantIdMessageInterceptor;
+import com.ocado.demo.tenant.sqs.receiving.TenantIdMessageInterceptor;
 import io.awspring.cloud.sqs.listener.interceptor.MessageInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

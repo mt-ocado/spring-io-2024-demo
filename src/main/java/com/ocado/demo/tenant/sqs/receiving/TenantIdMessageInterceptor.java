@@ -1,4 +1,4 @@
-package com.ocado.demo.tenant.sqs;
+package com.ocado.demo.tenant.sqs.receiving;
 
 import com.ocado.demo.tenant.TenantContext;
 import com.ocado.demo.tenant.TenantMessageProcessor;

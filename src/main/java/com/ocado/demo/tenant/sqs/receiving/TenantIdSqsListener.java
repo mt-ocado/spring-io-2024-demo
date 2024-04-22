@@ -1,4 +1,4 @@
-package com.ocado.demo.tenant.sqs;
+package com.ocado.demo.tenant.sqs.receiving;
 
 import com.ocado.demo.tenant.TenantContext;
 import io.awspring.cloud.sqs.annotation.SqsListener;
@@ -17,6 +17,7 @@ public class TenantIdSqsListener {
 
     @SqsListener("my-queue")
     public void listenMessage(String message) {
+        log.info("----Receiving----");
         var tenantId = tenantContext.getId();
         log.info("Hello, {}! Your tenant ID is \"{}\"", message, tenantId);
     }

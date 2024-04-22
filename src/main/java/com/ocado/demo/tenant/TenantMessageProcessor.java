@@ -10,4 +10,10 @@ public class TenantMessageProcessor {
     public <T> String extract(Message<T> message) {
         return message.getHeaders().get(TENANT_MESSAGE_ATTRIBUTE_NAME, String.class);
     }
+
+    public <T> Message<T> set(Message<T> message, String tenantId) {
+        return org.springframework.messaging.support.MessageBuilder.fromMessage(message)
+                .setHeader(TENANT_MESSAGE_ATTRIBUTE_NAME, tenantId)
+                .build();
+    }
 }
