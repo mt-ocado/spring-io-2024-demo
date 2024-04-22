@@ -1,6 +1,6 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="DemoApplication (message-interceptor)" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
-    <option name="ACTIVE_PROFILES" value="message-interceptor" />
+  <configuration default="false" name="DemoApplication. Step 4 (custom message interceptor)" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+    <option name="ACTIVE_PROFILES" value="step-4" />
     <envs>
       <env name="AWS_REGION" value="us-east-1" />
       <env name="AWS_ACCESS_KEY_ID" value="foo" />

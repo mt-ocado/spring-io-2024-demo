@@ -1,0 +1,15 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="DemoApplication. Step 1 (sending)" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+    <option name="ACTIVE_PROFILES" value="step-1" />
+    <envs>
+      <env name="AWS_REGION" value="us-east-1" />
+      <env name="AWS_ACCESS_KEY_ID" value="foo" />
+      <env name="AWS_SECRET_ACCESS_KEY" value="foo" />
+    </envs>
+    <module name="spring-io-2024-demo" />
+    <option name="SPRING_BOOT_MAIN_CLASS" value="com.ocado.demo.DemoApplication" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

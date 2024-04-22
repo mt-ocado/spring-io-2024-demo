@@ -15,8 +15,8 @@ import org.springframework.core.annotation.Order;
 
 import java.util.List;
 
-@Profile("custom-message-interceptor")
 @Configuration
+@Profile("step-4")
 public class CustomMessageInterceptorConfig {
     @Bean
     @Order(1)
