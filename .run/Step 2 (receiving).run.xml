@@ -1,6 +1,6 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="DemoApplication. Step 3 (observability)" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
-    <option name="ACTIVE_PROFILES" value="step-3" />
+  <configuration default="false" name="Step 2 (receiving)" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+    <option name="ACTIVE_PROFILES" value="step-2" />
     <envs>
       <env name="AWS_REGION" value="us-east-1" />
       <env name="AWS_ACCESS_KEY_ID" value="foo" />

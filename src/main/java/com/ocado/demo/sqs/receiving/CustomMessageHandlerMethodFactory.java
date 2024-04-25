@@ -10,32 +10,43 @@ import java.util.List;
 import java.util.logging.Logger;
 
 public class CustomMessageHandlerMethodFactory extends DefaultMessageHandlerMethodFactory {
+    //<editor-fold desc="// private fields">
     private final List<MessageInterceptor> messageInterceptors;
+    //</editor-fold>
 
+    //<editor-fold desc="// default constructor">
     public CustomMessageHandlerMethodFactory(List<MessageInterceptor> messageInterceptors) {
         this.messageInterceptors = messageInterceptors;
     }
+    //</editor-fold>
 
     @Override
     public InvocableHandlerMethod createInvocableHandlerMethod(Object bean, Method method) {
         var handlerMethod = super.createInvocableHandlerMethod(bean, method);
-        return new CustomInvocableHandlerMethod(bean, method, handlerMethod, messageInterceptors);
+        return new InvocableHandlerMethodWrapper(bean, method, handlerMethod, messageInterceptors);
     }
 
-    static class CustomInvocableHandlerMethod extends InvocableHandlerMethod {
-        private final Logger log = Logger.getLogger(CustomInvocableHandlerMethod.class.getName());
+    static class InvocableHandlerMethodWrapper extends InvocableHandlerMethod {
+        //<editor-fold desc="// private fields">
+        private final Logger log = Logger.getLogger(InvocableHandlerMethodWrapper.class.getName());
         private final InvocableHandlerMethod handlerMethod;
         private final List<MessageInterceptor> messageInterceptors;
+        //</editor-fold>
 
-        CustomInvocableHandlerMethod(Object bean, Method method, InvocableHandlerMethod handlerMethod, List<MessageInterceptor> messageInterceptors) {
+        //<editor-fold desc="// default constructor">
+        InvocableHandlerMethodWrapper(Object bean, Method method, InvocableHandlerMethod handlerMethod, List<MessageInterceptor> messageInterceptors) {
             super(bean, method);
             this.handlerMethod = handlerMethod;
             this.messageInterceptors = messageInterceptors;
         }
+        //</editor-fold>
 
         @Override
         public Object invoke(Message<?> message, Object... providedArgs) throws Exception {
+            //<editor-fold desc="// logs">
             log.info("[Custom Message Interceptor is used]");
+            //</editor-fold>
+
             messageInterceptors.forEach(interceptor -> interceptor.intercept(message));
             var result = handlerMethod.invoke(message, providedArgs);
             messageInterceptors.forEach(interceptor -> interceptor.afterProcessing(message, null));

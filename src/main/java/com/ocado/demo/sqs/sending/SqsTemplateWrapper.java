@@ -11,23 +11,30 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-public class SqsSendingService {
-    private static final Logger logger = LoggerFactory.getLogger(SqsSendingService.class);
+public class SqsTemplateWrapper {
+
+    //<editor-fold desc="// private fields">
+    private static final Logger logger = LoggerFactory.getLogger(SqsTemplateWrapper.class);
     private final SqsTemplate sqsTemplate;
     private final List<MessagePostProcessor> messagePostProcessors;
+    //</editor-fold>
 
-    public SqsSendingService(SqsTemplate sqsTemplate, List<MessagePostProcessor> messagePostProcessors) {
+    //<editor-fold desc="// default constructor">
+    public SqsTemplateWrapper(SqsTemplate sqsTemplate, List<MessagePostProcessor> messagePostProcessors) {
         this.sqsTemplate = sqsTemplate;
         this.messagePostProcessors = messagePostProcessors;
     }
+    //</editor-fold>
 
     public <T> void send(String queue, T payload) {
-        logger.info("----Sending----");
         Message<?> message = MessageBuilder.withPayload(payload).build();
         for (var messagePostProcessor : messagePostProcessors) {
             message = messagePostProcessor.postProcessMessage(message);
         }
-        logger.info("Send the {}", message);
         sqsTemplate.send(queue, message);
+
+        //<editor-fold desc="// logs">
+        logger.info("c. Send the {}", message);
+        //</editor-fold>
     }
 }

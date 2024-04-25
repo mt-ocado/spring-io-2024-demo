@@ -8,19 +8,22 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 @Component
-@Profile({"step-2", "step-3", "step-4"})
+@Profile({"step-2", "step-2-custom"})
 public class TenantIdSqsListener {
+    //<editor-fold desc="// private fields">
     private static final Logger logger = LoggerFactory.getLogger(TenantIdSqsListener.class);
     private final TenantContext tenantContext;
+    //</editor-fold>
 
+    //<editor-fold desc="// default constructor">
     public TenantIdSqsListener(TenantContext tenantContext) {
         this.tenantContext = tenantContext;
     }
+    //</editor-fold>
 
     @SqsListener("${sqs.queue}")
     public void listenMessage(String payload) {
-        logger.info("----Receiving----");
         var tenantId = tenantContext.get();
-        logger.info("Hello, {}! Your tenant ID is \"{}\"", payload, tenantId);
+        logger.info("c. Handle message \"{}\" from \"{}\"", payload, tenantId);
     }
 }
