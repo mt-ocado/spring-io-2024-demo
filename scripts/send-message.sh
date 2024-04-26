@@ -1,1 +1,1 @@
-curl -X POST http://localhost:8080/ocado-tenant/send -d "Hello, Spring I/O 2024!" -H "Content-Type: text/plain"
+curl -X POST http://localhost:8080/ocado-tenant/send -d 'Hello, Spring I/O 2024!' -H 'Content-Type: text/plain'

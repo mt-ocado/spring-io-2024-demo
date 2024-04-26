@@ -25,9 +25,10 @@ public class SqsSendingController {
         this.sqsSendingService = sqsTemplateWrapper;
         this.tenantContext = tenantContext;
     }
+
     //</editor-fold>
 
-    @PostMapping("/{tenantId}/send")
+    @PostMapping(value = "/{tenantId}/send")
     public String sendMessage(@RequestBody String payload, @PathVariable String tenantId) {
         //<editor-fold desc="// logs">
         logger.info("----Step 1. Sending----");
