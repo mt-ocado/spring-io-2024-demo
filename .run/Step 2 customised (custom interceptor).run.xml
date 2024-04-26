@@ -6,7 +6,7 @@
       <env name="AWS_ACCESS_KEY_ID" value="foo" />
       <env name="AWS_SECRET_ACCESS_KEY" value="foo" />
     </envs>
-    <module name="spring-io-2024-demo" />
+    <module name="spring-io-2024-ocado-demo.main" />
     <option name="SPRING_BOOT_MAIN_CLASS" value="com.ocado.demo.DemoApplication" />
     <method v="2">
       <option name="Make" enabled="true" />
