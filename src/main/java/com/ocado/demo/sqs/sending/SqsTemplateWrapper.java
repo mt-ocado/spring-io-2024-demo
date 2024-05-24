@@ -16,25 +16,32 @@ public class SqsTemplateWrapper {
     //<editor-fold desc="// private fields">
     private static final Logger logger = LoggerFactory.getLogger(SqsTemplateWrapper.class);
     private final SqsTemplate sqsTemplate;
-    private final List<MessagePostProcessor> messagePostProcessors;
+    private final List<MessagePostProcessor> processors;
     //</editor-fold>
 
     //<editor-fold desc="// default constructor">
     public SqsTemplateWrapper(SqsTemplate sqsTemplate, List<MessagePostProcessor> messagePostProcessors) {
         this.sqsTemplate = sqsTemplate;
-        this.messagePostProcessors = messagePostProcessors;
+        this.processors = messagePostProcessors;
     }
     //</editor-fold>
 
-    public <T> void send(String queue, T payload) {
-        Message<?> message = MessageBuilder.withPayload(payload).build();
-        for (var messagePostProcessor : messagePostProcessors) {
-            message = messagePostProcessor.postProcessMessage(message);
-        }
+    public <T> void send(String queue, T messageBody) {
+        var message = preProcessMessage(messageBody);
         sqsTemplate.send(queue, message);
 
         //<editor-fold desc="// logs">
         logger.info("c. Send the {}", message);
         //</editor-fold>
     }
+
+    //<editor-fold desc="// private helper methods">
+    private <T> Message<?> preProcessMessage(T messageBody) {
+        Message<?> message = MessageBuilder.withPayload(messageBody).build();
+        for (var processor : processors) {
+            message = processor.postProcessMessage(message);
+        }
+        return message;
+    }
+    //</editor-fold>
 }

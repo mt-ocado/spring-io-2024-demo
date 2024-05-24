@@ -22,8 +22,8 @@ public class TenantIdSqsListener {
     //</editor-fold>
 
     @SqsListener("${sqs.queue}")
-    public void listenMessage(String payload) {
+    public void listenMessage(String messageBody) {
         var tenantId = tenantContext.get();
-        logger.info("c. Handle message \"{}\" from \"{}\"", payload, tenantId);
+        logger.info("c. Handle message \"{}\" from \"{}\"", messageBody, tenantId);
     }
 }

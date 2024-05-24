@@ -30,14 +30,14 @@ public class CustomMessageHandlerMethodFactory extends DefaultMessageHandlerMeth
         //<editor-fold desc="// private fields">
         private final Logger log = Logger.getLogger(InvocableHandlerMethodWrapper.class.getName());
         private final InvocableHandlerMethod handlerMethod;
-        private final List<MessageInterceptor> messageInterceptors;
+        private final List<MessageInterceptor> interceptors;
         //</editor-fold>
 
         //<editor-fold desc="// default constructor">
-        InvocableHandlerMethodWrapper(Object bean, Method method, InvocableHandlerMethod handlerMethod, List<MessageInterceptor> messageInterceptors) {
+        InvocableHandlerMethodWrapper(Object bean, Method method, InvocableHandlerMethod handlerMethod, List<MessageInterceptor> interceptors) {
             super(bean, method);
             this.handlerMethod = handlerMethod;
-            this.messageInterceptors = messageInterceptors;
+            this.interceptors = interceptors;
         }
         //</editor-fold>
 
@@ -47,9 +47,9 @@ public class CustomMessageHandlerMethodFactory extends DefaultMessageHandlerMeth
             log.info("[Custom Message Interceptor is used]");
             //</editor-fold>
 
-            messageInterceptors.forEach(interceptor -> interceptor.intercept(message));
+            interceptors.forEach(interceptor -> interceptor.intercept(message));
             var result = handlerMethod.invoke(message, providedArgs);
-            messageInterceptors.forEach(interceptor -> interceptor.afterProcessing(message, null));
+            interceptors.forEach(interceptor -> interceptor.afterProcessing(message, null));
             return result;
         }
     }

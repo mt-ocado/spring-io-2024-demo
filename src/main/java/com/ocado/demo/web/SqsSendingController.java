@@ -29,14 +29,14 @@ public class SqsSendingController {
     //</editor-fold>
 
     @PostMapping(value = "/{tenantId}/send")
-    public String sendMessage(@RequestBody String payload, @PathVariable String tenantId) {
+    public String sendMessage(@RequestBody String messageBody, @PathVariable String tenantId) {
         //<editor-fold desc="// logs">
         logger.info("----Step 1. Sending----");
         logger.info("a. Receive REST call with tenant ID \"{}\"", tenantId);
         //</editor-fold>
 
         tenantContext.set(tenantId);
-        sqsTemplateWrapper.send(queue, payload);
+        sqsTemplateWrapper.send(queue, messageBody);
 
         //<editor-fold desc="// return REST response">
         return String.format("Your message with tenant ID \"%s\" has been sent", tenantId);
