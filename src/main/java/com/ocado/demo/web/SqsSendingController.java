@@ -16,13 +16,13 @@ public class SqsSendingController {
     private static final Logger logger = LoggerFactory.getLogger(SqsSendingController.class);
     @Value("${sqs.queue}")
     private String queue;
-    private final SqsTemplateWrapper sqsSendingService;
+    private final SqsTemplateWrapper sqsTemplateWrapper;
     private final TenantContext tenantContext;
     //</editor-fold>
 
     //<editor-fold desc="// default constructor">
     public SqsSendingController(SqsTemplateWrapper sqsTemplateWrapper, TenantContext tenantContext) {
-        this.sqsSendingService = sqsTemplateWrapper;
+        this.sqsTemplateWrapper = sqsTemplateWrapper;
         this.tenantContext = tenantContext;
     }
 
@@ -36,7 +36,7 @@ public class SqsSendingController {
         //</editor-fold>
 
         tenantContext.set(tenantId);
-        sqsSendingService.send(queue, payload);
+        sqsTemplateWrapper.send(queue, payload);
 
         //<editor-fold desc="// return REST response">
         return String.format("Your message with tenant ID \"%s\" has been sent", tenantId);
